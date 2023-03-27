@@ -191,7 +191,7 @@ class _TimePlannerState extends State<TimePlanner> {
                                 Padding(
                                   // we need some additional padding horizontally if we're showing in am/pm format
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: !config.use24HourFormat ? 4 : 0,
+                                    horizontal: !config.use24HourFormat ? 10 : 0,
                                   ),
                                   child: TimePlannerTime(
                                     // this returns the formatted time string based on the use24HourFormat argument.
