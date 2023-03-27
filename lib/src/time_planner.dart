@@ -166,10 +166,6 @@ class _TimePlannerState extends State<TimePlanner> {
                 ],
               ),
             ),
-            Container(
-              height: 1,
-              color: style.dividerColor ?? Theme.of(context).primaryColor,
-            ),
             Expanded(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
