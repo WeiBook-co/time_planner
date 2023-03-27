@@ -29,7 +29,7 @@ class TimePlannerTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
+      height: 55,
       width: config.cellWidth!.toDouble(),
       child: Center(
         child: Column(
@@ -38,6 +38,9 @@ class TimePlannerTitle extends StatelessWidget {
           children: <Widget>[
             Text(
               title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
               style: titleStyle ?? const TextStyle(fontWeight: FontWeight.w600),
             ),
             const SizedBox(
