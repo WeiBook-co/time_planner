@@ -81,6 +81,48 @@ class _MyHomePageState extends State<MyHomePage> {
         const SnackBar(content: Text('Random task added to time planner!')));
   }
 
+  void _handleCellTap(int dayIndex, int hour) {
+    TimePlannerTask newEvent = TimePlannerTask(
+      minutesDuration: 60, // Duración predeterminada de 60 minutos
+      dateTime: TimePlannerDateTime(day: dayIndex, hour: hour, minutes: 60),
+      color: Colors.blue, // Color predeterminado, puedes personalizarlo
+      onTap: () {
+        // Aquí puedes agregar la acción que deseas realizar cuando se haga clic en el evento en el futuro
+      },
+    );
+    setState(() {
+      tasks.add(newEvent);
+    });
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Evento'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+            
+              // Aquí puedes agregar más campos para ingresar detalles del evento
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Guardar'),
+            ),
+          ],
+        );
+      },
+    ).whenComplete(() {
+      setState(() {
+        tasks.remove(newEvent);
+      });
+    });
+  }
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,6 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: TimePlanner(
+          onTapCalendar: _handleCellTap,
           startHour: 6,
           endHour: 23,
           use24HourFormat: false,
