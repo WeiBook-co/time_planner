@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_planner/src/config/global_config.dart' as config;
+import 'package:time_planner/src/time_planner_date_time.dart';
 import 'package:time_planner/src/time_planner_style.dart';
 import 'package:time_planner/src/time_planner_task.dart';
 import 'package:time_planner/src/time_planner_time.dart';
@@ -33,12 +34,16 @@ class TimePlanner extends StatefulWidget {
   //Whether the time is displayed on the axis of the tim or on the center of the timeblock. Default is false.
   final bool setTimeOnAxis;
 
+  /// Dynamic function to set an event when a cell is clicked on
+  final Function onTapCalendar;
+
   /// Time planner widget
   const TimePlanner({
     Key? key,
     required this.startHour,
     required this.endHour,
     required this.headers,
+    required this.onTapCalendar,
     this.tasks,
     this.style,
     this.use24HourFormat = false,
@@ -191,7 +196,8 @@ class _TimePlannerState extends State<TimePlanner> {
                                 Padding(
                                   // we need some additional padding horizontally if we're showing in am/pm format
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: !config.use24HourFormat ? 10 : 0,
+                                    horizontal:
+                                        !config.use24HourFormat ? 10 : 0,
                                   ),
                                   child: TimePlannerTime(
                                     // this returns the formatted time string based on the use24HourFormat argument.
@@ -260,12 +266,16 @@ class _TimePlannerState extends State<TimePlanner> {
                                   Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      Container(
-                                        color: i.isOdd
-                                            ? style.interstitialOddColor
-                                            : style.interstitialEvenColor,
-                                        height:
-                                            (config.cellHeight! - 1).toDouble(),
+                                      InkWell(
+                                        onTap: () => widget.onTapCalendar(
+                                            i, widget.startHour + i),
+                                        child: Container(
+                                          color: i.isOdd
+                                              ? style.interstitialOddColor
+                                              : style.interstitialEvenColor,
+                                          height: (config.cellHeight! - 1)
+                                              .toDouble(),
+                                        ),
                                       ),
                                       // The horizontal lines tat divides the rows
                                       //TODO: Make a configurable color for this (maybe a size too)
@@ -283,9 +293,13 @@ class _TimePlannerState extends State<TimePlanner> {
                                   Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      SizedBox(
-                                        width:
-                                            (config.cellWidth! - 1).toDouble(),
+                                      InkWell(
+                                        onTap: () => widget.onTapCalendar(
+                                            i, widget.startHour + i),
+                                        child: Container(
+                                          width: (config.cellWidth! - 1)
+                                              .toDouble(),
+                                        ),
                                       ),
                                       // The vertical lines that divides the columns
                                       //TODO: Make a configurable color for this (maybe a size too)
