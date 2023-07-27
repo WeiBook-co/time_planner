@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:time_planner/src/config/global_config.dart' as config;
-import 'package:time_planner/src/time_planner_date_time.dart';
 import 'package:time_planner/src/time_planner_style.dart';
 import 'package:time_planner/src/time_planner_task.dart';
 import 'package:time_planner/src/time_planner_time.dart';
@@ -234,12 +233,12 @@ class _TimePlannerState extends State<TimePlanner> {
     if (style.showScrollBar!) {
       return Scrollbar(
         controller: mainVerticalController,
-        isAlwaysShown: true,
+        thumbVisibility: true,
         child: SingleChildScrollView(
           controller: mainVerticalController,
           child: Scrollbar(
             controller: mainHorizontalController,
-            isAlwaysShown: true,
+            thumbVisibility: true,
             child: SingleChildScrollView(
               controller: mainHorizontalController,
               scrollDirection: Axis.horizontal,
@@ -278,7 +277,6 @@ class _TimePlannerState extends State<TimePlanner> {
                                         ),
                                       ),
                                       // The horizontal lines tat divides the rows
-                                      //TODO: Make a configurable color for this (maybe a size too)
                                       const Divider(
                                         height: 1,
                                       ),
@@ -302,7 +300,6 @@ class _TimePlannerState extends State<TimePlanner> {
                                         ),
                                       ),
                                       // The vertical lines that divides the columns
-                                      //TODO: Make a configurable color for this (maybe a size too)
                                       Container(
                                         width: 1,
                                         height: (config.totalHours *

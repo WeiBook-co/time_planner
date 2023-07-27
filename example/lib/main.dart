@@ -83,12 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _handleCellTap(int dayIndex, int hour) {
     TimePlannerTask newEvent = TimePlannerTask(
-      minutesDuration: 60, // Duración predeterminada de 60 minutos
+      minutesDuration: 60,
       dateTime: TimePlannerDateTime(day: dayIndex, hour: hour, minutes: 60),
-      color: Colors.blue, // Color predeterminado, puedes personalizarlo
-      onTap: () {
-        // Aquí puedes agregar la acción que deseas realizar cuando se haga clic en el evento en el futuro
-      },
+      color: Colors.blue,
+      onTap: () {},
     );
     setState(() {
       tasks.add(newEvent);
@@ -97,20 +95,17 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Evento'),
-          content: Column(
+          title: const Text('Event'),
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
-            
-              // Aquí puedes agregar más campos para ingresar detalles del evento
-            ],
+            children: [],
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Guardar'),
+              child: const Text('Save'),
             ),
           ],
         );
@@ -121,7 +116,6 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     });
   }
-  
 
   @override
   Widget build(BuildContext context) {
