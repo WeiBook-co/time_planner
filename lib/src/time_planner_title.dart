@@ -55,7 +55,10 @@ class TimePlannerTitle extends StatelessWidget {
                     ),
             ),
             SizedBox(
-              child: Text(title),
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+              ),
               width: 60,
             )
           ],
