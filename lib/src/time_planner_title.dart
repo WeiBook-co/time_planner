@@ -17,6 +17,9 @@ class TimePlannerTitle extends StatelessWidget {
   /// Text style for date text
   final TextStyle? dateStyle;
 
+  /// Image url for circle avatar
+  final String imageUrl;
+
   /// Title widget for time planner
   const TimePlannerTitle({
     Key? key,
@@ -24,33 +27,32 @@ class TimePlannerTitle extends StatelessWidget {
     this.date,
     this.titleStyle,
     this.dateStyle,
+    required this.imageUrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 55,
+      height: 80,
       width: config.cellWidth!.toDouble(),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: titleStyle ?? const TextStyle(fontWeight: FontWeight.w600),
+          children: [
+            CircleAvatar(
+              backgroundImage: NetworkImage(imageUrl),
+              backgroundColor: const Color.fromRGBO(36, 107, 254, 1),
+              child: imageUrl != ""
+                  ? const SizedBox()
+                  : Text(
+                      title.substring(0, 2).toUpperCase(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
             ),
-            const SizedBox(
-              height: 3,
-            ),
-            Text(
-              date ?? '',
-              style: dateStyle ??
-                  const TextStyle(color: Colors.grey, fontSize: 12),
-            ),
+            Text(title)
           ],
         ),
       ),
