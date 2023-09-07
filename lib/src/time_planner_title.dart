@@ -45,14 +45,19 @@ class TimePlannerTitle extends StatelessWidget {
               backgroundColor: const Color.fromRGBO(36, 107, 254, 1),
               child: imageUrl != ""
                   ? const SizedBox()
-                  : Text(
-                      title.substring(0, 2).toUpperCase(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                  : SizedBox(
+                      child: Text(
+                        title.substring(0, 2).toUpperCase(),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
             ),
-            Text(title)
+            SizedBox(
+              child: Text(title),
+              width: 60,
+            )
           ],
         ),
       ),
