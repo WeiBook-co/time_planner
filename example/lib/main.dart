@@ -119,139 +119,142 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: TimePlanner(
-          onTapCalendar: _handleCellTap,
-          startHour: 6,
-          endHour: 23,
-          use24HourFormat: false,
-          setTimeOnAxis: false,
-          style: TimePlannerStyle(
-            // cellHeight: 60,
-            // cellWidth: 60,
-            showScrollBar: true,
-            interstitialEvenColor: Colors.grey[50],
-            interstitialOddColor: Colors.grey[200],
-          ),
-          headers: const [
-            TimePlannerTitle(
-              date: "3/10/2021",
-              title: "sunday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/11/2021",
-              title: "monday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/12/2021",
-              title: "tuesday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/13/2021",
-              title: "wednesday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/14/2021",
-              title: "thursday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/15/2021",
-              title: "friday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/16/2021",
-              title: "saturday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/17/2021",
-              title: "sunday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/18/2021",
-              title: "monday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/19/2021",
-              title: "tuesday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/20/2021",
-              title: "wednesday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/21/2021",
-              title: "thursday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/22/2021",
-              title: "friday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/23/2021",
-              title: "saturday",
-              imageUrl: '',
-            ),
-            TimePlannerTitle(
-              date: "3/24/2021",
-              title: "tuesday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/25/2021",
-              title: "wednesday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/26/2021",
-              title: "thursday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/27/2021",
-              title: "friday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/28/2021",
-              title: "saturday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/29/2021",
-              title: "friday",
-              imageUrl: "",
-            ),
-            TimePlannerTitle(
-              date: "3/30/2021",
-              title: "saturday",
-              imageUrl: "",
-            ),
-          ],
-          tasks: tasks,
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+          centerTitle: true,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _addObject(context),
-        tooltip: 'Add random task',
-        child: const Icon(Icons.add),
+        body: Center(
+          child: TimePlanner(
+            onTapCalendar: _handleCellTap,
+            startHour: 6,
+            endHour: 23,
+            use24HourFormat: false,
+            setTimeOnAxis: false,
+            style: TimePlannerStyle(
+              // cellHeight: 60,
+              // cellWidth: 60,
+              showScrollBar: true,
+              interstitialEvenColor: Colors.grey[50],
+              interstitialOddColor: Colors.grey[200],
+            ),
+            headers: const [
+              TimePlannerTitle(
+                date: "3/10/2021",
+                title: "sunday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/11/2021",
+                title: "monday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/12/2021",
+                title: "tuesday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/13/2021",
+                title: "wednesday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/14/2021",
+                title: "thursday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/15/2021",
+                title: "friday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/16/2021",
+                title: "saturday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/17/2021",
+                title: "sunday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/18/2021",
+                title: "monday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/19/2021",
+                title: "tuesday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/20/2021",
+                title: "wednesday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/21/2021",
+                title: "thursday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/22/2021",
+                title: "friday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/23/2021",
+                title: "saturday",
+                imageUrl: '',
+              ),
+              TimePlannerTitle(
+                date: "3/24/2021",
+                title: "tuesday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/25/2021",
+                title: "wednesday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/26/2021",
+                title: "thursday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/27/2021",
+                title: "friday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/28/2021",
+                title: "saturday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/29/2021",
+                title: "friday",
+                imageUrl: "",
+              ),
+              TimePlannerTitle(
+                date: "3/30/2021",
+                title: "saturday",
+                imageUrl: "",
+              ),
+            ],
+            tasks: tasks,
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _addObject(context),
+          tooltip: 'Add random task',
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }

@@ -19,6 +19,8 @@ class TimePlannerTask extends StatelessWidget {
   /// This will be happen when user tap on task, for example show a dialog or navigate to other page
   final Function? onTap;
 
+  final Color? borderSecondary;
+
   /// Show this child on the task
   ///
   /// Typically an [Text].
@@ -33,6 +35,7 @@ class TimePlannerTask extends StatelessWidget {
     this.color,
     this.onTap,
     this.child,
+    this.borderSecondary,
   }) : super(key: key);
 
   @override
@@ -49,8 +52,6 @@ class TimePlannerTask extends StatelessWidget {
           padding:
               EdgeInsets.only(left: config.horizontalTaskPadding!.toDouble()),
           child: Material(
-            elevation: 3,
-            borderRadius: config.borderRadius,
             child: Stack(
               children: [
                 InkWell(
@@ -61,8 +62,14 @@ class TimePlannerTask extends StatelessWidget {
                     width: (config.cellWidth!.toDouble() * (daysDuration ?? 1)),
                     // (daysDuration! >= 1 ? daysDuration! : 1)),
                     decoration: BoxDecoration(
-                        borderRadius: config.borderRadius,
-                        color: color ?? Theme.of(context).primaryColor),
+                      color: color ?? Theme.of(context).primaryColor,
+                      border: BorderDirectional(
+                        start: BorderSide(
+                          width: 5,
+                          color: borderSecondary ?? const Color.fromRGBO(36, 107, 254, 1),
+                        ),
+                      ),
+                    ),
                     child: Center(
                       child: child,
                     ),

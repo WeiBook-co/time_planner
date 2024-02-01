@@ -58,6 +58,7 @@ class TimePlannerTitle extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
+                style:const TextStyle(fontSize: 11),
               ),
               width: 60,
             )
