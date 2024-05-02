@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:time_planner/src/config/global_config.dart' as config;
 import 'package:time_planner/src/time_planner_style.dart';
 import 'package:time_planner/src/time_planner_task.dart';
