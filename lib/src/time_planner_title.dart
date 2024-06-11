@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:time_planner/src/config/global_config.dart' as config;
 
+class TimeRange {
+  final TimeOfDay start;
+  final TimeOfDay end;
+
+  const TimeRange({
+    required this.start,
+    required this.end,
+  });
+}
+
 /// Title widget for time planner
 class TimePlannerTitle extends StatelessWidget {
   /// Title of each day, typically is name of the day for example sunday
@@ -20,6 +30,8 @@ class TimePlannerTitle extends StatelessWidget {
   /// Image url for circle avatar
   final String imageUrl;
 
+  final List<TimeRange> blockedRanges;
+
   /// Title widget for time planner
   const TimePlannerTitle({
     Key? key,
@@ -28,6 +40,7 @@ class TimePlannerTitle extends StatelessWidget {
     this.titleStyle,
     this.dateStyle,
     required this.imageUrl,
+    this.blockedRanges = const [],
   }) : super(key: key);
 
   @override
@@ -58,7 +71,7 @@ class TimePlannerTitle extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style:const TextStyle(fontSize: 11),
+                style: const TextStyle(fontSize: 11),
               ),
               width: 60,
             )
