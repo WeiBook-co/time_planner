@@ -256,371 +256,288 @@ class _TimePlannerState extends State<TimePlanner> {
     );
   }
 
-  Widget buildMainBody() {
-    GlobalKey hourKey = GlobalKey();
+Widget buildMainBody() {
+  GlobalKey hourKey = GlobalKey();
 
-    List<Widget> buildBlockedAreas() {
-      List<Widget> blockedAreas = [];
+  List<Widget> buildBlockedAreas() {
+    List<Widget> blockedAreas = [];
 
-      for (var dayIndex = 0; dayIndex < config.totalDays; dayIndex++) {
-        var blockedRanges = widget.headers[dayIndex].blockedRanges;
+    for (var dayIndex = 0; dayIndex < config.totalDays; dayIndex++) {
+      var blockedRanges = widget.headers[dayIndex].blockedRanges;
 
-        for (var range in blockedRanges) {
-          var startHour = range.start.hour;
-          var startMinute = range.start.minute;
-          var endHour = range.end.hour;
-          var endMinute = range.end.minute;
+      for (var range in blockedRanges) {
+        var startHour = range.start.hour;
+        var startMinute = range.start.minute;
+        var endHour = range.end.hour;
+        var endMinute = range.end.minute;
 
-          // Calcular la posición y tamaño del bloque
-          double topPosition =
-              ((startHour - widget.startHour) * config.cellHeight! +
-                      (startMinute / 60) * config.cellHeight!)
-                  .toDouble();
-          double height = ((endHour - startHour) * config.cellHeight! +
-                  ((endMinute - startMinute) / 60) * config.cellHeight!)
-              .toDouble();
+        // Calcular la posición y tamaño del bloque
+        double topPosition =
+            ((startHour - widget.startHour) * config.cellHeight! +
+                    (startMinute / 60) * config.cellHeight!)
+                .toDouble();
+        double height = ((endHour - startHour) * config.cellHeight! +
+                ((endMinute - startMinute) / 60) * config.cellHeight!)
+            .toDouble();
 
-          blockedAreas.add(Positioned(
-            top: topPosition,
-            left: (dayIndex * config.cellWidth!).toDouble(),
-            width: config.cellWidth!.toDouble(),
-            height: height,
-            child: InkWell(
-              onTapDown: (details) {
-                // Obtener la posición del toque en relación con el contenido visible
-                final RenderBox box = context.findRenderObject() as RenderBox;
-                final Offset localOffset =
-                    box.globalToLocal(details.globalPosition);
-                final double verticalOffset = mainVerticalController.offset;
-
-                final double relativeY = localOffset.dy + verticalOffset;
-
-                final double heightColumn = hourKey.currentContext!
-                    .findRenderObject()!
-                    .paintBounds
-                    .size
-                    .height;
-
-                final double heightBlock = heightColumn / config.totalHours;
-
-                if (relativeY >= heightBlock && relativeY <= heightBlock * 2) {
-                  widget.onTapCalendar(dayIndex, widget.startHour - 1);
-                } else if (relativeY >= (heightBlock * 2) + 1 &&
-                    relativeY <= heightBlock * 3) {
-                  widget.onTapCalendar(dayIndex, widget.startHour);
-                } else if (relativeY >= (heightBlock * 3) + 1 &&
-                    relativeY <= heightBlock * 4) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 1);
-                } else if (relativeY >= (heightBlock * 4) + 1 &&
-                    relativeY <= heightBlock * 5) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 2);
-                } else if (relativeY >= (heightBlock * 5) + 1 &&
-                    relativeY <= heightBlock * 6) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 3);
-                } else if (relativeY >= (heightBlock * 6) + 1 &&
-                    relativeY <= heightBlock * 7) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 4);
-                } else if (relativeY >= (heightBlock * 7) + 1 &&
-                    relativeY <= heightBlock * 8) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 5);
-                } else if (relativeY >= (heightBlock * 8) + 1 &&
-                    relativeY <= heightBlock * 9) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 6);
-                } else if (relativeY >= (heightBlock * 9) + 1 &&
-                    relativeY <= heightBlock * 10) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 7);
-                } else if (relativeY >= (heightBlock * 10) + 1 &&
-                    relativeY <= heightBlock * 11) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 8);
-                } else if (relativeY >= (heightBlock * 11) + 1 &&
-                    relativeY <= heightBlock * 12) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 9);
-                } else if (relativeY >= (heightBlock * 12) + 1 &&
-                    relativeY <= heightBlock * 13) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 10);
-                } else if (relativeY >= (heightBlock * 13) + 1 &&
-                    relativeY <= heightBlock * 14) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 11);
-                } else if (relativeY >= (heightBlock * 14) + 1 &&
-                    relativeY <= heightBlock * 15) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 12);
-                } else if (relativeY >= (heightBlock * 15) + 1 &&
-                    relativeY <= heightBlock * 16) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 13);
-                } else if (relativeY >= (heightBlock * 16) + 1 &&
-                    relativeY <= heightBlock * 17) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 14);
-                } else if (relativeY >= (heightBlock * 17) + 1 &&
-                    relativeY <= heightBlock * 18) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 15);
-                } else if (relativeY >= (heightBlock * 18) + 1 &&
-                    relativeY <= heightBlock * 19) {
-                  widget.onTapCalendar(dayIndex, widget.startHour + 16);
-                }
-              },
-              child: Container(
-                color: Colors.grey.withOpacity(0.2),
-                child: ClipRect(
-                  child: CustomPaint(
-                    size: Size(config.cellWidth!.toDouble(), height),
-                    painter: DiagonalLinesPainter(
-                      color: Colors.grey.withOpacity(0.8),
-                      lineWidth: 1.0,
-                      spacing: 10.0,
-                    ),
+        blockedAreas.add(Positioned(
+          top: topPosition,
+          left: (dayIndex * config.cellWidth!).toDouble(),
+          width: config.cellWidth!.toDouble(),
+          height: height,
+          child: IgnorePointer(
+            child: Container(
+              color: Colors.grey.withOpacity(0.2),
+              child: ClipRect(
+                child: CustomPaint(
+                  size: Size(config.cellWidth!.toDouble(), height),
+                  painter: DiagonalLinesPainter(
+                    color: Colors.grey.withOpacity(0.8),
+                    lineWidth: 1.0,
+                    spacing: 10.0,
                   ),
                 ),
               ),
             ),
-          ));
-        }
+          ),
+        ));
       }
-
-      return blockedAreas;
     }
 
-    return SingleChildScrollView(
-      controller: mainVerticalController,
-      child: SingleChildScrollView(
-        controller: mainHorizontalController,
-        scrollDirection: Axis.horizontal,
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    SizedBox(
-                      height: (config.totalHours * config.cellHeight!) + 80,
-                      width: (config.totalDays * config.cellWidth!).toDouble(),
-                      child: Stack(
-                        children: <Widget>[
-                          Column(
-                            key: hourKey,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              for (var i = 0; i < config.totalHours; i++)
-                                Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Container(
-                                      height:
-                                          (config.cellHeight! - 1).toDouble(),
-                                      color: i.isOdd
-                                          ? style.interstitialOddColor
-                                          : style.interstitialEvenColor,
-                                    ),
-                                    const Divider(
-                                      height: 1,
-                                    ),
-                                  ],
-                                )
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              for (var i = 0; i < config.totalDays; i++)
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Column(
-                                      children: [
-                                        for (var j = 0;
-                                            j < config.totalHours;
-                                            j++)
-                                          Column(
-                                            children: [
-                                              for (var k = 0; k < 2; k++)
-                                                InkWell(
-                                                  onTapDown: (details) {
-                                                    // Obtener la posición del toque en relación con el contenido visible
-                                                    final RenderBox box = context
-                                                            .findRenderObject()
-                                                        as RenderBox;
-                                                    final Offset localOffset =
-                                                        box.globalToLocal(details
-                                                            .globalPosition);
-                                                    final double
-                                                        verticalOffset =
-                                                        mainVerticalController
-                                                            .offset;
-
-                                                    final double relativeY =
-                                                        localOffset.dy +
-                                                            verticalOffset;
-
-                                                    final double heightColumn =
-                                                        hourKey.currentContext!
-                                                            .findRenderObject()!
-                                                            .paintBounds
-                                                            .size
-                                                            .height;
-
-                                                    final double heightBlock =
-                                                        heightColumn /
-                                                            config.totalHours;
-
-                                                    if (relativeY >= heightBlock &&
-                                                        relativeY <=
-                                                            heightBlock * 2) {
-                                                      widget.onTapCalendar(i,
-                                                          widget.startHour - 1);
-                                                    } else if (relativeY >= (heightBlock * 2) + 1 &&
-                                                        relativeY <=
-                                                            heightBlock * 3) {
-                                                      widget.onTapCalendar(
-                                                          i, widget.startHour);
-                                                    } else if (relativeY >= (heightBlock * 3) + 1 &&
-                                                        relativeY <=
-                                                            heightBlock * 4) {
-                                                      widget.onTapCalendar(i,
-                                                          widget.startHour + 1);
-                                                    } else if (relativeY >= (heightBlock * 4) + 1 &&
-                                                        relativeY <=
-                                                            heightBlock * 5) {
-                                                      widget.onTapCalendar(i,
-                                                          widget.startHour + 2);
-                                                    } else if (relativeY >= (heightBlock * 5) + 1 &&
-                                                        relativeY <=
-                                                            heightBlock * 6) {
-                                                      widget.onTapCalendar(i,
-                                                          widget.startHour + 3);
-                                                    } else if (relativeY >= (heightBlock * 6) + 1 &&
-                                                        relativeY <=
-                                                            heightBlock * 7) {
-                                                      widget.onTapCalendar(i,
-                                                          widget.startHour + 4);
-                                                    } else if (relativeY >= (heightBlock * 7) + 1 &&
-                                                        relativeY <=
-                                                            heightBlock * 8) {
-                                                      widget.onTapCalendar(i,
-                                                          widget.startHour + 5);
-                                                    } else if (relativeY >= (heightBlock * 8) + 1 &&
-                                                        relativeY <=
-                                                            heightBlock * 9) {
-                                                      widget.onTapCalendar(i,
-                                                          widget.startHour + 6);
-                                                    } else if (relativeY >= (heightBlock * 9) + 1 &&
-                                                        relativeY <=
-                                                            heightBlock * 10) {
-                                                      widget.onTapCalendar(i,
-                                                          widget.startHour + 7);
-                                                    } else if (relativeY >= (heightBlock * 10) + 1 &&
-                                                        relativeY <=
-                                                            heightBlock * 11) {
-                                                      widget.onTapCalendar(i,
-                                                          widget.startHour + 8);
-                                                    } else if (relativeY >= (heightBlock * 11) + 1 &&
-                                                        relativeY <=
-                                                            heightBlock * 12) {
-                                                      widget.onTapCalendar(i,
-                                                          widget.startHour + 9);
-                                                    } else if (relativeY >= (heightBlock * 12) + 1 &&
-                                                        relativeY <=
-                                                            heightBlock * 13) {
-                                                      widget.onTapCalendar(
-                                                          i,
-                                                          widget.startHour +
-                                                              10);
-                                                    } else if (relativeY >= (heightBlock * 13) + 1 &&
-                                                        relativeY <=
-                                                            heightBlock * 14) {
-                                                      widget.onTapCalendar(
-                                                          i,
-                                                          widget.startHour +
-                                                              11);
-                                                    } else if (relativeY >= (heightBlock * 14) + 1 &&
-                                                        relativeY <=
-                                                            heightBlock * 15) {
-                                                      widget.onTapCalendar(
-                                                          i,
-                                                          widget.startHour +
-                                                              12);
-                                                    } else if (relativeY >=
-                                                            (heightBlock * 15) +
-                                                                1 &&
-                                                        relativeY <=
-                                                            heightBlock * 16) {
-                                                      widget.onTapCalendar(
-                                                          i,
-                                                          widget.startHour +
-                                                              13);
-                                                    } else if (relativeY >=
-                                                            (heightBlock * 16) +
-                                                                1 &&
-                                                        relativeY <=
-                                                            heightBlock * 17) {
-                                                      widget.onTapCalendar(
-                                                          i,
-                                                          widget.startHour +
-                                                              14);
-                                                    } else if (relativeY >=
-                                                            (heightBlock * 17) +
-                                                                1 &&
-                                                        relativeY <=
-                                                            heightBlock * 18) {
-                                                      widget.onTapCalendar(
-                                                          i,
-                                                          widget.startHour +
-                                                              15);
-                                                    } else if (relativeY >=
-                                                            (heightBlock * 18) +
-                                                                1 &&
-                                                        relativeY <= heightBlock * 19) {
-                                                      widget.onTapCalendar(
-                                                          i,
-                                                          widget.startHour +
-                                                              16);
-                                                    }
-                                                  },
-                                                  child: Container(
-                                                    width:
-                                                        (config.cellWidth! - 1)
-                                                            .toDouble(),
-                                                    height:
-                                                        (config.cellHeight! /
-                                                                    2 -
-                                                                1)
-                                                            .toDouble(),
-                                                    color: Colors.transparent,
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                      ],
-                                    ),
-                                    Container(
-                                      width: 1,
-                                      height: (config.totalHours *
-                                              config.cellHeight!) +
-                                          config.cellHeight!,
-                                      color: Colors.black12,
-                                    ),
-                                  ],
-                                )
-                            ],
-                          ),
-                          for (int i = 0; i < tasks.length; i++) tasks[i],
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            ...buildBlockedAreas(),
-          ],
-        ),
-      ),
-    );
+    return blockedAreas;
   }
+
+  return SingleChildScrollView(
+    controller: mainVerticalController,
+    child: SingleChildScrollView(
+      controller: mainHorizontalController,
+      scrollDirection: Axis.horizontal,
+      child: Stack(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  SizedBox(
+                    height: (config.totalHours * config.cellHeight!) + 80,
+                    width: (config.totalDays * config.cellWidth!).toDouble(),
+                    child: Stack(
+                      children: <Widget>[
+                        Column(
+                          key: hourKey,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            for (var i = 0; i < config.totalHours; i++)
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Container(
+                                    height: (config.cellHeight! - 1).toDouble(),
+                                    color: i.isOdd
+                                        ? style.interstitialOddColor
+                                        : style.interstitialEvenColor,
+                                  ),
+                                  const Divider(
+                                    height: 1,
+                                  ),
+                                ],
+                              )
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            for (var i = 0; i < config.totalDays; i++)
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Column(
+                                    children: [
+                                      for (var j = 0; j < config.totalHours; j++)
+                                        Column(
+                                          children: [
+                                            for (var k = 0; k < 2; k++)
+                                              InkWell(
+                                                onTapDown: (details) {
+                                                  // Manejo del tap en las casillas
+                                                  final RenderBox box =
+                                                      context.findRenderObject()
+                                                          as RenderBox;
+                                                  final Offset localOffset = box
+                                                      .globalToLocal(details
+                                                          .globalPosition);
+                                                  final double verticalOffset =
+                                                      mainVerticalController
+                                                          .offset;
+
+                                                  final double relativeY =
+                                                      localOffset.dy +
+                                                          verticalOffset;
+
+                                                  final double heightColumn =
+                                                      hourKey.currentContext!
+                                                          .findRenderObject()!
+                                                          .paintBounds
+                                                          .size
+                                                          .height;
+
+                                                  final double heightBlock =
+                                                      heightColumn /
+                                                          config.totalHours;
+
+                                                  if (relativeY >= heightBlock &&
+                                                      relativeY <=
+                                                          heightBlock * 2) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour - 1);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 2) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 3) {
+                                                    widget.onTapCalendar(
+                                                        i, widget.startHour);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 3) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 4) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 1);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 4) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 5) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 2);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 5) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 6) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 3);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 6) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 7) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 4);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 7) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 8) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 5);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 8) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 9) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 6);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 9) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 10) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 7);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 10) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 11) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 8);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 11) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 12) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 9);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 12) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 13) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 10);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 13) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 14) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 11);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 14) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 15) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 12);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 15) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 16) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 13);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 16) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 17) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 14);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 17) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 18) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 15);
+                                                  } else if (relativeY >=
+                                                          (heightBlock * 18) + 1 &&
+                                                      relativeY <=
+                                                          heightBlock * 19) {
+                                                    widget.onTapCalendar(i,
+                                                        widget.startHour + 16);
+                                                  }
+                                                },
+                                                child: Container(
+                                                  width: (config.cellWidth! - 1)
+                                                      .toDouble(),
+                                                  height:
+                                                      (config.cellHeight! / 2 - 1)
+                                                          .toDouble(),
+                                                  color: Colors.transparent,
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                    ],
+                                  ),
+                                  Container(
+                                    width: 1,
+                                    height: (config.totalHours *
+                                            config.cellHeight!) +
+                                        config.cellHeight!,
+                                    color: Colors.black12,
+                                  ),
+                                ],
+                              )
+                          ],
+                        ),
+                        for (int i = 0; i < tasks.length; i++) tasks[i],
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          ...buildBlockedAreas(),
+        ],
+      ),
+    ),
+  );
+}
 
   String formattedTime(int hour) {
     if (config.use24HourFormat) {
